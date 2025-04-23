@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cook Islands Meteorological Services Intranet</title>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #17a2b8;
+            --accent-color: #ffc107;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 60px;
+            margin-right: 1rem;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-bar input {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            width: 250px;
+        }
+        
+        .search-bar button {
+            background-color: var(--accent-color);
+            border: none;
+            color: #333;
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        nav {
+            background-color: var(--dark-color);
+            color: white;
+        }
+        
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        
+        .nav-menu li {
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .nav-menu li:hover {
+            background-color: rgba(255,255,255,0.1);
+            cursor: pointer;
+        }
+        
+        .nav-menu .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 1;
+            left: 0;
+            top: 100%;
+            border-radius: 4px;
+        }
+        
+        .nav-menu li:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-content a {
+            color: #333;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
+            gap: 1rem;
+            padding: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .sidebar {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .main-content {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .sidebar h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        
+        .quick-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .quick-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .quick-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .quick-links a:hover {
+            background-color: #f0f4f8;
+        }
+        
+        .weather-widget {
+            background: linear-gradient(135deg, #87CEEB, #4682B4);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .weather-data {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+        
+        .weather-icon {
+            font-size: 2.5rem;
+        }
+        
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        
+        .staff-directory {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+        
+        .staff-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .staff-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 0.5rem;
+        }
+        
+        .announcement {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .weather-station-status {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .station {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .status-online {
+            background-color: #28a745;
+        }
+        
+        .status-warning {
+            background-color: #ffc107;
+        }
+        
+        .status-offline {
+            background-color: #dc3545;
+        }
+        
+        .calendar {
+            margin-top: 1rem;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+        
+        .calendar-day {
+            background-color: #f8f9fa;
+            padding: 0.5rem;
+            text-align: center;
+            height: 30px;
+        }
+        
+        .calendar-day.today {
+            background-color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .calendar-day.has-event {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .document-list {
+            margin-top: 1rem;
+        }
+        
+        .document-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .document-icon {
+            margin-right: 0.5rem;
+            color: #6c757d;
+        }
+        
+        .tab-container {
+            margin-top: 1rem;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            margin-right: 0.5rem;
+        }
+        
+        .tab.active {
+            background-color: white;
+            border-color: #ddd;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/api/placeholder/80/80" alt="Cook Islands Meteorological Services Logo">
+            <h1>Cook Islands Meteorological Services</h1>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search the intranet...">
+            <button>Search</button>
+        </div>
+    </header>
+    
+    <nav>
+        <ul class="nav-menu">
+            <li>Home</li>
+            <li>
+                Weather Services
+                <div class="dropdown-content">
+                    <a href="#">Forecasts</a>
+                    <a href="#">Warnings</a>
+                    <a href="#">Marine Services</a>
+                    <a href="#">Aviation Services</a>
+                    <a href="#">Climate Services</a>
+                </div>
+            </li>
+            <li>
+                Operations
+                <div class="dropdown-content">
+                    <a href="#">Weather Stations</a>
+                    <a href="#">Radar Systems</a>
+                    <a href="#">Data Management</a>
+                    <a href="#">Observation Network</a>
+                </div>
+            </li>
+            <li>
+                Resources
+                <div class="dropdown-content">
+                    <a href="#">Training Materials</a>
+                    <a href="#">Standard Operating Procedures</a>
+                    <a href="#">Equipment Manuals</a>
+                    <a href="#">Research Papers</a>
+                </div>
+            </li>
+            <li>
+                Administration
+                <div class="dropdown-content">
+                    <a href="#">Staff Directory</a>
+                    <a href="#">Leave Management</a>
+                    <a href="#">Forms & Documents</a>
+                    <a href="#">IT Support</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="weather-widget">
+                <h3>Current Weather</h3>
+                <p>Rarotonga, Cook Islands</p>
+                <div class="weather-data">
+                    <div>
+                        <div class="weather-icon">☀️</div>
+                        <div>29°C</div>
+                    </div>
+                    <div>
+                        <div>Wind: 15 km/h SE</div>
+                        <div>Humidity: 65%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Quick Links</h3>
+            <ul class="quick-links">
+                <li><a href="#">Daily Briefing Notes</a></li>
+                <li><a href="#">Duty Roster</a></li>
+                <li><a href="#">Equipment Status</a></li>
+                <li><a href="#">Leave Calendar</a></li>
+                <li><a href="#">Meeting Room Booking</a></li>
+                <li><a href="#">IT Support Ticket</a></li>
+                <li><a href="#">Vehicle Booking</a></li>
+            </ul>
+            
+            <h3>Recent Documents</h3>
+            <div class="document-list">
+                <div class="document-item">
+                    <span class="document-icon">📄</span>
+                    <span>April Weather Summary</span>
+                </div>
+                <div class="document-item">
+                    <span class="document-icon">📄</span>
+                    <span>Cyclone Season Report</span>
+                </div>
+                <div class="document-item">
+                    <span class="document-icon">📄</span>
+                    <span>Staff Meeting Minutes</span>
+                </div>
+                <div class="document-item">
+                    <span class="document-icon">📄</span>
+                    <span>Rainfall Data Analysis</span>
+                </div>
+            </div>
+            
+            <h3>Weather Station Status</h3>
+            <div class="weather-station-status">
+                <div class="station">
+                    <div class="status-indicator status-online"></div>
+                    <span>Rarotonga</span>
+                </div>
+                <div class="station">
+                    <div class="status-indicator status-online"></div>
+                    <span>Aitutaki</span>
+                </div>
+                <div class="station">
+                    <div class="status-indicator status-warning"></div>
+                    <span>Mangaia</span>
+                </div>
+                <div class="station">
+                    <div class="status-indicator status-online"></div>
+                    <span>Atiu</span>
+                </div>
+                <div class="station">
+                    <div class="status-indicator status-offline"></div>
+                    <span>Penrhyn</span>
+                </div>
+                <div class="station">
+                    <div class="status-indicator status-online"></div>
+                    <span>Manihiki</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="announcement">
+                <h3>Important Notice: System Maintenance</h3>
+                <p>The weather forecasting system will be undergoing scheduled maintenance on Friday, April 25, 2025, from 20:00 to 23:00 local time. Please ensure all forecasts are completed and published before this time.</p>
+            </div>
+            
+            <h2>Welcome to the Cook Islands Meteorological Services Intranet</h2>
+            <p>This internal portal provides access to resources, tools, and information for all Cook Islands Meteorological Services staff. Find the latest updates, access operational tools, and collaborate with your colleagues.</p>
+            
+            <div class="tab-container">
+                <div class="tabs">
+                    <div class="tab active">Announcements</div>
+                    <div class="tab">Upcoming Events</div>
+                    <div class="tab">Projects</div>
+                </div>
+                <div class="tab-content">
+                    <div class="card">
+                        <h3>New Radar System Installation</h3>
+                        <p>The installation of our new weather radar system in Rarotonga is scheduled to begin on May 10, 2025. Training sessions for operations staff will be conducted the following week.</p>
+                        <p><small>Posted by: Technical Services Department - April 18, 2025</small></p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Quarterly Performance Reports Due</h3>
+                        <p>All department heads are reminded to submit their quarterly performance reports by April 30, 2025. Please use the updated template available in the Administration section.</p>
+                        <p><small>Posted by: HR Department - April 15, 2025</small></p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Climate Change Workshop</h3>
+                        <p>Registration is now open for the Pacific Climate Change Workshop to be held in Fiji next month. Interested staff members should complete the expression of interest form by April 28.</p>
+                        <p><small>Posted by: Climate Services Division - April 10, 2025</small></p>
+                    </div>
+                </div>
+            </div>
+            
+            <h2>Staff Spotlight</h2>
+            <div class="staff-directory">
+                <div class="staff-card">
+                    <img src="/api/placeholder/80/80" alt="Staff Photo">
+                    <h3>Matariki Williams</h3>
+                    <p>Forecaster of the Month</p>
+                    <p><small>Accurate cyclone predictions saved lives last month</small></p>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="/api/placeholder/80/80" alt="Staff Photo">
+                    <h3>Teuira Mataiti</h3>
+                    <p>15 Years of Service</p>
+                    <p><small>Celebrating dedication to meteorological excellence</small></p>
+                </div>
+                
+                <div class="staff-card">
+                    <img src="/api/placeholder/80/80" alt="Staff Photo">
+                    <h3>John Ngamata</h3>
+                    <p>Welcome to our team</p>
+                    <p><small>New Marine Forecaster joining from NIWA</small></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <h3>Calendar</h3>
+            <div class="calendar">
+                <div class="calendar-header">
+                    <span>April 2025</span>
+                    <div>
+                        <button>&lt;</button>
+                        <button>&gt;</button>
+                    </div>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day">Mo</div>
+                    <div class="calendar-day">Tu</div>
+                    <div class="calendar-day">We</div>
+                    <div class="calendar-day">Th</div>
+                    <div class="calendar-day">Fr</div>
+                    <div class="calendar-day">Sa</div>
+                    <div class="calendar-day">Su</div>
+                    
+                    <div class="calendar-day">31</div>
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day">6</div>
+                    
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div>
+                    <div class="calendar-day">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day">13</div>
+                    
+                    <div class="calendar-day">14</div>
+                    <div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day">20</div>
+                    
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day today">22</div>
+                    <div class="calendar-day has-event">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day has-event">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                </div>
+            </div>
+            
+            <h3>Upcoming Events</h3>
+            <div class="quick-links">
+                <li><a href="#">Apr 23 - Staff Meeting (9:00 AM)</a></li>
+                <li><a href="#">Apr 25 - System Maintenance</a></li>
+                <li><a href="#">May 1 - Monthly Report Due</a></li>
+                <li><a href="#">May 5-7 - WMO Regional Workshop</a></li>
+                <li><a href="#">May 10 - Radar Installation Begins</a></li>
+            </div>
+            
+            <h3>Weather Warnings</h3>
+            <div class="card" style="background-color: #fff3cd; border-color: #ffc107;">
+                <h4 style="margin-top: 0;">Marine Warning</h4>
+                <p>Strong winds and high swells expected in northern waters through April 24.</p>
+            </div>
+            
+            <h3>Daily Quote</h3>
+            <div class="card">
+                <p><em>"Climate is what we expect, weather is what we get."</em></p>
+                <p>- Mark Twain</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Cook Islands Meteorological Services Intranet © 2025</p>
+        <p>For technical support, contact IT Department: ext. 4567</p>
+    </footer>
+</body>
+</html>
